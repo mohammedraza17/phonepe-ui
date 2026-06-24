@@ -1,6 +1,8 @@
 package com.raza.phonepeclone
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,18 +11,21 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Help
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.AccountBalanceWallet
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.SyncAlt
@@ -40,6 +45,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,66 +59,89 @@ import androidx.compose.ui.unit.sp
 fun PhonePeTopBar() {
     TopAppBar(
         title = {
-            Column {
+            Column(modifier = Modifier.padding(start = 0.dp)) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "Add Address",
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowDown,
+                        contentDescription = "Dropdown",
+                        tint = Color.White,
+                        modifier = Modifier.size(18.dp)
+                    )
+                }
                 Text(
-                    text = "Add Address",
-                    color = Color.White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 9.dp)
-                )
-                Text(
-                    text = "Mohammed Raza",
-                    color = Color.White.copy(alpha = 0.8f),
-                    fontSize = 16.sp
+                    text = "Nehru Nagar",
+                    color = Color.White.copy(alpha = 0.9f),
+                    fontSize = 12.sp
                 )
             }
         },
         navigationIcon = {
-            IconButton(onClick = {}) {
+            Box(
+                modifier = Modifier
+                    .padding(start = 12.dp, end = 8.dp)
+                    .size(40.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                // Main Circle Profile
                 Box(
                     modifier = Modifier
-                        .size(42.dp)
-                        .background(Color.White, CircleShape),
+                        .size(36.dp)
+                        .background(Color.White, CircleShape)
+                        .border(1.dp, Color.LightGray, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Person,
+                        imageVector = Icons.Default.AccountCircle,
                         contentDescription = "Profile",
-                        tint = Color.Gray,
-                        modifier = Modifier.size(28.dp)
+                        modifier = Modifier.fillMaxSize(),
+                        tint = Color(0xFF5F259F)
                     )
                 }
             }
         },
         actions = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = {}, modifier = Modifier.size(40.dp)) {
                 Icon(
                     imageVector = Icons.Default.QrCodeScanner,
                     contentDescription = "Scan QR",
-                    tint = Color.White
+                    tint = Color.White,
+                    modifier = Modifier.size(24.dp)
                 )
             }
-            IconButton(onClick = {}) {
+            IconButton(onClick = {}, modifier = Modifier.size(40.dp)) {
                 BadgedBox(
                     badge = {
-                        Badge {
-                            Text("3")
+                        Badge(
+                            containerColor = Color(0xFF4CAF50),
+                            contentColor = Color.White,
+                            modifier = Modifier.offset(x = (-4).dp, y = 4.dp)
+                        ) {
+                            Text("3", fontSize = 10.sp)
                         }
                     }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Notifications,
                         contentDescription = "Notifications",
-                        tint = Color.White
+                        tint = Color.White,
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }
-            IconButton(onClick = {}) {
+            IconButton(onClick = {}, modifier = Modifier.size(40.dp)) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.Help,
                     contentDescription = "Help",
-                    tint = Color.White
+                    tint = Color.White,
+                    modifier = Modifier.size(24.dp)
                 )
             }
         },
