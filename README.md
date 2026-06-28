@@ -1,8 +1,8 @@
-📱 PhonePe UI 
+📱 PhonePe UI
 A pixel-perfect clone of the PhonePe mobile app UI — built with Kotlin + Jetpack Compose. Pure UI only, no backend or database.
 ---
 🖼️ Preview
-> Home screen · Payment flow · Transaction history · UPI PIN screen
+> Home screen · Payment flow · Transaction history · UPI PIN screen.
 ---
 ✨ Features
 Home Dashboard — Balance card, quick action buttons (Send Money, Add Money, Pay Bills)
