@@ -22,8 +22,11 @@ import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.AccountBalanceWallet
+import androidx.compose.material.icons.filled.Campaign
+import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.SyncAlt
@@ -41,6 +44,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -56,7 +60,10 @@ import com.raza.phonepeclone.ui.theme.PhonePeCloneTheme
 fun PhonePeTopBar() {
     TopAppBar(
         title = {
-            Column(modifier = Modifier.padding(start = 0.dp)) {
+            Column(
+                modifier = Modifier.padding(start = 0.dp),
+                verticalArrangement = Arrangement.spacedBy((-9).dp)
+            ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -74,7 +81,7 @@ fun PhonePeTopBar() {
                     )
                 }
                 Text(
-                    text = "Nehru Nagar",
+                    text = "Shanthala Nagar",
                     color = Color.White.copy(alpha = 0.9f),
                     fontSize = 12.sp
                 )
@@ -84,23 +91,63 @@ fun PhonePeTopBar() {
             Box(
                 modifier = Modifier
                     .padding(start = 12.dp, end = 8.dp)
-                    .size(40.dp),
-                contentAlignment = Alignment.Center
+                    .size(40.dp)
             ) {
-                // Main Circle Profile
+                // Main Square Profile
                 Box(
                     modifier = Modifier
-                        .size(36.dp)
-                        .background(Color.White, CircleShape)
-                        .border(1.dp, Color.LightGray, CircleShape),
-                    contentAlignment = Alignment.Center
+                        .size(34.dp)
+                        .background(Color.White, RoundedCornerShape(10.dp))
+                        .align(Alignment.Center)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.AccountCircle,
+                        imageVector = Icons.Default.Person,
                         contentDescription = "Profile",
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize().padding(4.dp),
                         tint = Color(0xFF5F259F)
                     )
+                }
+
+                // Indian Flag Badge at the bottom right
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .offset(x = 2.dp, y = 2.dp)
+                        .size(15.dp)
+                        .background(Color.White, CircleShape)
+                        .padding(1.5.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                                .background(Color(0xFFFF9933))
+                        )
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                                .background(Color.White),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(2.dp)
+                                    .background(Color(0xFF000080), CircleShape)
+                            )
+                        }
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                                .background(Color(0xFF138808))
+                        )
+                    }
                 }
             }
         },
@@ -153,7 +200,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     Scaffold(
         topBar = { PhonePeTopBar() },
         modifier = modifier.fillMaxSize(),
-        containerColor = Color(0xFFF5F5F5)
+        containerColor = Color(0xFFF1F0F7) // Slightly purple background
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -161,6 +208,85 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 .verticalScroll(rememberScrollState())
         ) {
             MoneyTransfersSection()
+            PromoSection()
+        }
+    }
+}
+
+@Composable
+fun PromoSection() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 4.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        PromoCard(
+            modifier = Modifier.weight(1f),
+            title = "PhonePe\nWallet",
+            icon = Icons.Default.AccountBalanceWallet,
+            backgroundColor = Color(0xFF5B92FF)
+        )
+        PromoCard(
+            modifier = Modifier.weight(1f),
+            title = "Rewards",
+            icon = Icons.Default.CardGiftcard,
+            backgroundColor = Color(0xFF5B92FF),
+            badge = "1"
+        )
+        PromoCard(
+            modifier = Modifier.weight(1f),
+            title = "Refer & Earn\n₹100",
+            icon = Icons.Default.Campaign,
+            backgroundColor = Color(0xFF5B92FF)
+        )
+    }
+}
+
+@Composable
+fun PromoCard(
+    modifier: Modifier = Modifier,
+    title: String,
+    icon: ImageVector,
+    backgroundColor: Color,
+    badge: String? = null
+) {
+    Card(
+        modifier = modifier.height(85.dp),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = backgroundColor)
+    ) {
+        Box(modifier = Modifier.fillMaxSize().padding(8.dp)) {
+            if (badge != null) {
+                Badge(
+                    containerColor = Color(0xFF4CAF50),
+                    contentColor = Color.White,
+                    modifier = Modifier.align(Alignment.TopEnd).offset(x = 4.dp, y = (-4).dp)
+                ) {
+                    Text(badge, fontSize = 10.sp)
+                }
+            }
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = title,
+                    color = Color.White,
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 13.sp
+                )
+            }
         }
     }
 }
@@ -175,13 +301,13 @@ fun MoneyTransfersSection() {
         colors = CardDefaults.cardColors(
             containerColor = Color.White
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "Transfer Money",
+                text = "Money Transfers",
                 fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
+                fontSize = 15.sp,
                 color = Color.Black
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -192,7 +318,7 @@ fun MoneyTransfersSection() {
                 TransferOption(Icons.Default.PhoneAndroid, "To Mobile\nNumber")
                 TransferOption(Icons.Default.AccountBalance, "To Bank/\nUPI ID")
                 TransferOption(Icons.Default.SyncAlt, "To Self\nAccount")
-                TransferOption(Icons.Default.AccountBalanceWallet, "Check\nBalance")
+                TransferOption(Icons.Default.AccountBalanceWallet, "Check Bank\nBalance")
             }
         }
     }
